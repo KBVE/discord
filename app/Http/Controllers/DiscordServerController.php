@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 
 class DiscordServerController extends Controller
 {
+    public function public() {
+        $servers = DiscordServer::all();
+        return view('index', compact('servers'));
+    }
     /**
      * Display a listing of the resource.
      *
