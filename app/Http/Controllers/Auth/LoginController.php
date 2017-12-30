@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -23,5 +24,7 @@ class LoginController extends Controller
         $user->save();
 
         Auth::login($user);
+
+        return redirect()->route('index');
     }
 }
