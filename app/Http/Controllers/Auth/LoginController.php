@@ -2,38 +2,26 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\User;
 use App\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Login Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles authenticating users for the application and
-    | redirecting them to your home screen. The controller uses a trait
-    | to conveniently provide its functionality to your applications.
-    |
-    */
+    public function login(Request $request) {
+        $client = new \GuzzleHttp\Client();
+        $result = $client->get('https://api.kbve.com/user/' . $request->user,
+            [
+                'headers' => ['x-session-token' => $request->token]
+            ]);
+        $kbve_data = \GuzzleHttp\json_decode($result->getBody()->getContents())->data;
 
-    use AuthenticatesUsers;
+        $user = User::firstOrNew(['kbve_id' => $kbve_data->id]);
+        $user->kbve_id = $kbve_data->id;
+        $user->username = $kbve_data->username;
+        $user->token = $request->token;
+        $user->save();
 
-    /**
-     * Where to redirect users after login.
-     *
-     * @var string
-     */
-    protected $redirectTo = '/home';
-
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('guest')->except('logout');
+        Auth::login($user);
     }
 }
