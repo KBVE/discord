@@ -10813,3 +10813,12 @@ thead tr td {
   color: #c0392b;
 }
 
+.g-recaptcha {
+  width: 304px;
+  margin: 50px auto;
+}
+
+.form-center {
+  text-align: center;
+}
+

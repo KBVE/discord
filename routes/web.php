@@ -4,7 +4,8 @@ Route::get('/login', 'Auth\LoginController@login')->name('login');
 Route::get('/', 'DiscordServerController@public')->name('index');
 Route::post('/logout', 'Auth\LogoutController@logout')->name('logout');
 
-Route::get('/vote/{discordServer}', 'VoteController@store')->name('vote.store');
+Route::post('/vote', 'VoteController@store')->name('vote.store');
+Route::get('/vote/{discordServer}', 'VoteController@create')->name('vote.create');
 Route::get('/server/{discordServer}', 'DiscordServerController@show')->name('servers.view');
 
 Route::get('/me/servers', 'DiscordServerController@index')->name('servers.index')->middleware('auth');

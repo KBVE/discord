@@ -11,7 +11,7 @@
     <title>{{ config('app.name') }}</title>
 
     <link href="/css/app.css" rel="stylesheet">
-
+    {!! NoCaptcha::renderJs() !!}
     <!-- Scripts -->
     <script>
         window.Laravel = <?php echo json_encode([

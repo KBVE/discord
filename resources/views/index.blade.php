@@ -6,6 +6,12 @@
 
 @section('content')
     <div class="page">
+        @if(session('success'))
+            <div class="alert alert-success">{{ session('success') }}</div>
+        @endif
+        @if(session('error'))
+            <div class="alert alert-error">{{ session('error') }}</div>
+        @endif
         @foreach($servers as $server)
             <div class="server">
                 <div class="server-info">
@@ -15,9 +21,9 @@
                 </div>
                 <div class="server-vote">
                     @if ($server->hasVoted())
-                        <a class="voted" href="{{ route('vote.store', ["discordServer" => $server->id]) }}">{{ $server->score() }} <i class="fa fa-heart"></i></a>
+                        <a class="voted" href="{{ route('vote.create', ["discordServer" => $server->id]) }}">{{ $server->score() }} <i class="fa fa-heart"></i></a>
                     @else
-                        <a href="{{ route('vote.store', ["discordServer" => $server->id]) }}">{{ $server->score() }} <i class="fa fa-heart"></i></a>
+                        <a href="{{ route('vote.create', ["discordServer" => $server->id]) }}">{{ $server->score() }} <i class="fa fa-heart"></i></a>
                     @endif
                 </div>
             </div>
