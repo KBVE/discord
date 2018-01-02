@@ -14,7 +14,11 @@
                     <a href="{{ $server->discord_id }}" target="_blank">Join server</a>
                 </div>
                 <div class="server-vote">
-                    <a href="{{ route('vote.store', ["discordServer" => $server->id]) }}">{{ $server->score() }} <i class="fa fa-heart"></i></a>
+                    @if ($server->hasVoted())
+                        <a class="voted" href="{{ route('vote.store', ["discordServer" => $server->id]) }}">{{ $server->score() }} <i class="fa fa-heart"></i></a>
+                    @else
+                        <a href="{{ route('vote.store', ["discordServer" => $server->id]) }}">{{ $server->score() }} <i class="fa fa-heart"></i></a>
+                    @endif
                 </div>
             </div>
         @endforeach

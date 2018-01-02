@@ -121,3 +121,19 @@ thead {
     color: #202020;
   }
 }
+
+.server-vote {
+  a {
+    color: #202020;
+    text-decoration: none;
+
+    &:hover {
+      color: #c0392b;
+    }
+
+    &.voted {
+
+      color: #c0392b;
+    }
+  }
+}

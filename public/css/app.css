@@ -10800,3 +10800,16 @@ thead tr td {
   color: #202020;
 }
 
+.server-vote a {
+  color: #202020;
+  text-decoration: none;
+}
+
+.server-vote a:hover {
+  color: #c0392b;
+}
+
+.server-vote a.voted {
+  color: #c0392b;
+}
+
