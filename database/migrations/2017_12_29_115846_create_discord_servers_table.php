@@ -15,6 +15,11 @@ class CreateDiscordServersTable extends Migration
     {
         Schema::create('discord_servers', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('user_id');
+            $table->text('discord_id');
+            $table->text('description');
+            $table->text('name');
+            $table->text('tags');
             $table->timestamps();
         });
     }

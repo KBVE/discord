@@ -62,8 +62,8 @@
                     @if (!Auth::guest())
                         <li class="dropdown">
                             <a href="#" class="nav-avatar-container dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                <img class="nav-avatar" src="/avatars/{{ Auth::user()->avatar }}" alt="Avatar">
-                                {{ Auth::user()->name }} <span class="caret"></span>
+                                <!-- <img class="nav-avatar" src="/avatars/{{ Auth::user()->avatar }}" alt="Avatar"> -->
+                                {{ Auth::user()->username }} <span class="caret"></span>
                             </a>
 
                             <ul class="dropdown-menu" role="menu">
@@ -89,8 +89,12 @@
             </div>
         </div>
     </nav>
-
-    @yield('content')
+    <div class="title">
+        <h1>@yield('title')</h1>
+    </div>
+    <div class="container">
+        @yield('content')
+    </div>
 </div>
 
 <!-- Scripts -->

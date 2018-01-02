@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\DiscordServer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DiscordServerController extends Controller
 {
@@ -18,7 +19,8 @@ class DiscordServerController extends Controller
      */
     public function index()
     {
-        //
+        $servers = Auth::user()->servers;
+        return view('me.servers.index', compact('servers'));
     }
 
     /**
@@ -28,7 +30,7 @@ class DiscordServerController extends Controller
      */
     public function create()
     {
-        //
+        return view('me.servers.create');
     }
 
     /**
@@ -39,7 +41,26 @@ class DiscordServerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'link' => 'required',
+            'description' => 'required',
+            'tags' => 'required'
+        ]);
+
+        $server = new DiscordServer();
+        $server->name = $request->name;
+        $server->discord_id = $request->link;
+        $server->tags = $request->tags;
+        $server->description = $request->description;
+        $server->user_id = Auth::user()->id;
+
+        if ($server->save()) {
+            return redirect()->route('servers.index')->with('success', 'Successfully added server!');
+        } else {
+            return redirect()->route('servers.index')->with('error', 'Something went wrong');
+        }
+
     }
 
     /**
@@ -61,7 +82,12 @@ class DiscordServerController extends Controller
      */
     public function edit(DiscordServer $discordServer)
     {
-        //
+        if ($discordServer->user_id != Auth::user()->id)
+            abort(404);
+
+        $server = $discordServer;
+
+        return view('me.servers.edit', compact('server'));
     }
 
     /**
@@ -73,7 +99,19 @@ class DiscordServerController extends Controller
      */
     public function update(Request $request, DiscordServer $discordServer)
     {
-        //
+        if ($discordServer->user_id != Auth::user()->id)
+            abort(404);
+
+        $discordServer->name = $request->name;
+        $discordServer->discord_id = $request->link;
+        $discordServer->tags = $request->tags;
+        $discordServer->description = $request->description;
+
+        if ($discordServer->save()) {
+            return redirect()->route('servers.index')->with('success', 'Successfully updated server!');
+        } else {
+            return redirect()->route('servers.index')->with('error', 'Something went wrong');
+        }
     }
 
     /**
@@ -84,6 +122,15 @@ class DiscordServerController extends Controller
      */
     public function destroy(DiscordServer $discordServer)
     {
-        //
+        if ($discordServer->user_id != Auth::user()->id)
+            abort(404);
+
+
+
+        if ($discordServer->delete()) {
+            return redirect()->route('servers.index')->with('success', 'Successfully deleted server!');
+        } else {
+            return redirect()->route('servers.index')->with('error', 'Something went wrong');
+        }
     }
 }
