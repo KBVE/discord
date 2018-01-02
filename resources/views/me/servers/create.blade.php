@@ -17,8 +17,8 @@
                 <label for="link">Invite link</label>
             </div>
             <div class="custom-field">
-                <textarea name="description" id="description" cols="30" rows="10" required>{{ old('description') }}</textarea>
-                <label for="description">Server description</label>
+                <textarea name="description" id="description" cols="30" rows="10" maxlength="500" required>{{ old('description') }}</textarea>
+                <label for="description">Server description (max 500 letters)</label>
             </div>
             <div class="custom-field">
                 <input name="tags" type="text" id="tags" required value="{{ old('tags') }}">

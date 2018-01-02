@@ -46,7 +46,7 @@
 
                 <!-- Branding Image -->
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    <img src="/img/logo.svg" alt="">
+                    KBVE
                 </a>
             </div>
 

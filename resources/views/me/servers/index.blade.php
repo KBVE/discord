@@ -25,8 +25,14 @@
     @endif
 
     <div class="page">
-        <table class="table table-striped">
-            <thead>
+        @if($servers->count() == 0)
+            <div class="empty-result">
+                <h3>No servers yet!</h3>
+                <a href="{{ route('servers.create') }}">Create one now</a>
+            </div>
+        @else
+            <table class="table table-striped">
+                <thead>
                 <tr>
                     <td>Name</td>
                     <td>Link</td>
@@ -35,8 +41,8 @@
                     <td style="width: 60px;"></td>
                     <td style="width: 60px;"></td>
                 </tr>
-            </thead>
-            <tbody>
+                </thead>
+                <tbody>
                 @foreach($servers as $server)
                     <tr>
                         <td>{{ $server->name }}</td>
@@ -47,7 +53,8 @@
                         <td style="width: 60px;"><a href="{{ route('servers.destroy', ["discordServer" => $server->id]) }}"><i class="fa fa-trash"></i></a></td>
                     </tr>
                 @endforeach
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        @endif
     </div>
 @endsection

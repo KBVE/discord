@@ -10791,3 +10791,12 @@ thead tr td {
   color: #0b0b0b;
 }
 
+.empty-result {
+  text-align: center;
+  padding: 100px 0;
+}
+
+.empty-result h3 {
+  color: #202020;
+}
+

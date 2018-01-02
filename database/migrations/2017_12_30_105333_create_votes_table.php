@@ -15,6 +15,8 @@ class CreateVotesTable extends Migration
     {
         Schema::create('votes', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('discordserver_id');
+            $table->string('ip');
             $table->timestamps();
         });
     }

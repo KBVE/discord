@@ -8,10 +8,15 @@ use Illuminate\Support\Facades\Auth;
 
 class DiscordServerController extends Controller
 {
-    public function public() {
-        $servers = DiscordServer::all();
+    public function public()
+    {
+        $servers = DiscordServer::with('votes')->get()->sortByDesc(function($server, $key) {
+            return $server->votes->count();
+        });
+
         return view('index', compact('servers'));
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -42,10 +47,10 @@ class DiscordServerController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required',
-            'link' => 'required',
-            'description' => 'required',
-            'tags' => 'required'
+            'name' => 'required|max:255',
+            'link' => 'required|max:255',
+            'description' => 'required|max:500',
+            'tags' => 'required|max:255'
         ]);
 
         $server = new DiscordServer();
@@ -71,7 +76,9 @@ class DiscordServerController extends Controller
      */
     public function show(DiscordServer $discordServer)
     {
-        //
+        $server = $discordServer;
+
+        return view('server', compact('server'));
     }
 
     /**
